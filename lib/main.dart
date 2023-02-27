@@ -12,5 +12,9 @@ void main() {
     DeviceOrientation.landscapeRight,
   ]);
 
-  runApp(const App());
+  bool theme = false;
+
+  runApp(App(
+    theme: theme,
+  ));
 }
