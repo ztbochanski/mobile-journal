@@ -13,6 +13,7 @@ class JournalEntry {
     required this.date,
   });
 
+  @override
   String toString() {
     return 'JournalEntry(id: $id, rating: $rating, title: $title, body: $body, date: $date)';
   }
