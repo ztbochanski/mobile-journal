@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
 class Welcome extends StatelessWidget {
-  const Welcome({Key? key}) : super(key: key);
+  final String welcomeMessage;
+  final String title;
+  static String routeName = '/';
 
-  static const routeName = '/';
+  const Welcome({Key? key, required this.welcomeMessage, required this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Journal'),
+        title: Text(title),
       ),
-      body: const Center(
-        child: Text('Welcome! To start writing, tap the + button'),
+      body: Center(
+        child: Text(welcomeMessage),
       ),
     );
   }
