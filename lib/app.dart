@@ -13,7 +13,7 @@ class App extends StatefulWidget {
 
 class AppState extends State<App> {
   static final routes = {
-    Welcome.routeName: (context) => Welcome(),
+    Welcome.routeName: (context) => const Welcome(),
   };
 
   @override
