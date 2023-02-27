@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Welcome extends StatelessWidget {
-  final String welcomeMessage;
-  final String title;
-  static String routeName = '/';
+  final String title = 'Welcome';
+  final String welcomeMessage = 'Welcome! To start writing, tap the + button';
+  static String routeName = '/welcome';
 
-  const Welcome({Key? key, required this.welcomeMessage, required this.title})
-      : super(key: key);
+  const Welcome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
