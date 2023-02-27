@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'screens/welcome_screen.dart';
 
+const String appTitle = 'Journal';
+const String welcomeMessage = 'Welcome! To start writing, tap the + button';
+
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
 
@@ -11,7 +14,8 @@ class App extends StatefulWidget {
 
 class AppState extends State<App> {
   static final routes = {
-    Welcome.routeName: (context) => const Welcome(),
+    Welcome.routeName: (context) =>
+        const Welcome(title: appTitle, welcomeMessage: welcomeMessage),
   };
 
   @override
