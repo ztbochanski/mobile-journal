@@ -9,10 +9,7 @@ class ThemeProvider with ChangeNotifier {
   bool _isDarkModeOn = true;
 
   ThemeProvider() {
-    _themePreference.loadThemeFromPrefs().then((value) {
-      _isDarkModeOn = value;
-      notifyListeners();
-    });
+    _loadTheme();
   }
 
   bool get isDarkModeOn => _isDarkModeOn;
@@ -20,6 +17,11 @@ class ThemeProvider with ChangeNotifier {
   void toggleTheme(bool isOn) {
     _isDarkModeOn = isOn;
     _themePreference.saveThemeToPrefs(isOn);
+    notifyListeners();
+  }
+
+  void _loadTheme() async {
+    _isDarkModeOn = await _themePreference.loadThemeFromPrefs() ?? false;
     notifyListeners();
   }
 }

@@ -15,7 +15,7 @@ class ThemePreference {
     _preferences.setBool(isDarkModeOn, isOn);
   }
 
-  Future<bool> loadThemeFromPrefs() async {
+  Future<bool?> loadThemeFromPrefs() async {
     _preferences = await _initPrefs();
     return _preferences.getBool(isDarkModeOn) ?? false;
   }
