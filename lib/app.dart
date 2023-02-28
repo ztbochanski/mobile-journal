@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
+import 'screens/welcome_screen.dart';
 import 'provider/theme_provider.dart';
 
 class App extends StatelessWidget {
@@ -25,18 +27,7 @@ class App extends StatelessWidget {
 
 class JournalEntriesListScreen extends StatelessWidget {
   JournalEntriesListScreen({Key? key}) : super(key: key);
-  final List<String> _entries = <String>[
-    'Entry 1',
-    'Entry 2',
-    'Entry 3',
-    'Entry 4',
-    'Entry 5',
-    'Entry 6',
-    'Entry 7',
-    'Entry 8',
-    'Entry 9',
-    'Entry 10',
-  ];
+  final List<String> _entries = <String>[];
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +58,7 @@ class JournalEntriesListScreen extends StatelessWidget {
         ),
       ),
       body: _entries.isEmpty
-          ? const Center(
-              child: Text('No entries yet'),
-            )
+          ? const WelcomeScreen()
           : ListView.builder(
               itemCount: _entries.length,
               itemBuilder: (context, index) {
