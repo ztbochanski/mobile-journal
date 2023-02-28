@@ -3,29 +3,35 @@ import 'package:flutter/material.dart';
 import 'screens/welcome_screen.dart';
 
 class App extends StatefulWidget {
-  final bool theme;
-
-  const App({Key? key, required this.theme}) : super(key: key);
-
+  const App({Key? key}) : super(key: key);
   @override
-  AppState createState() => AppState();
+  State<App> createState() => _AppState();
 }
 
-class AppState extends State<App> {
-  static final routes = {
-    Welcome.routeName: (context) => const Welcome(),
-  };
+class _AppState extends State<App> {
+  late bool _isDarkMode;
+
+  @override
+  void initState() {
+    super.initState();
+    _isDarkMode = false;
+  }
+
+  void _toggleDarkMode(bool value) {
+    setState(() {
+      _isDarkMode = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Journal',
-      theme: ThemeData(
-        primarySwatch: Colors.pink,
+      title: 'Flutter Demo',
+      theme: _isDarkMode ? ThemeData.dark() : ThemeData.light(),
+      home: WelcomeScreen(
+        isDarkMode: _isDarkMode,
+        onDarkModeToggle: _toggleDarkMode,
       ),
-      darkTheme: ThemeData(brightness: Brightness.dark),
-      themeMode: widget.theme ? ThemeMode.dark : ThemeMode.light,
-      routes: routes,
     );
   }
 }
