@@ -1,100 +1,25 @@
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
+import 'package:journal/screens/welcome_screen.dart';
+import 'package:journal/screens/journal_entries_list_screen.dart';
 
-import 'screens/welcome_screen.dart';
-import 'provider/theme_provider.dart';
-
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
 
   @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child) {
-        return MaterialApp(
-          title: 'Journal App',
-          theme:
-              themeProvider.isDarkModeOn ? ThemeData.dark() : ThemeData.light(),
-          home: JournalEntriesListScreen(),
-        );
+    return MaterialApp(
+      title: 'Journal',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const JournalEntriesListScreen(),
+        '/welcome': (context) => const WelcomeScreen(),
       },
     );
   }
-  // @override
-  // State<App> createState() => _AppState();
 }
-
-class JournalEntriesListScreen extends StatelessWidget {
-  JournalEntriesListScreen({Key? key}) : super(key: key);
-  final List<String> _entries = <String>[];
-
-  @override
-  Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Journal Entries'),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-              ),
-              child: const Text('App Settings'),
-            ),
-            SwitchListTile(
-              title: const Text('Dark mode'),
-              value: themeProvider.isDarkModeOn,
-              onChanged: (value) {
-                themeProvider.toggleTheme(value);
-              },
-            ),
-          ],
-        ),
-      ),
-      body: _entries.isEmpty
-          ? const WelcomeScreen()
-          : ListView.builder(
-              itemCount: _entries.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(_entries[index]),
-                );
-              },
-            ),
-    );
-  }
-}
-
-// class _AppState extends State<App> {
-//   late bool _isDarkMode;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _isDarkMode = false;
-//   }
-
-//   void _toggleDarkMode(bool value) {
-//     setState(() {
-//       _isDarkMode = value;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: _isDarkMode ? ThemeData.dark() : ThemeData.light(),
-//       home: WelcomeScreen(
-//         isDarkMode: _isDarkMode,
-//         onDarkModeToggle: _toggleDarkMode,
-//       ),
-//     );
-//   }
-// }
