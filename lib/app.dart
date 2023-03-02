@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:journal/screens/new_entry_screen.dart';
 
-import 'package:journal/screens/welcome_screen.dart';
 import 'package:journal/screens/journal_entries_list_screen.dart';
 
 class App extends StatefulWidget {
@@ -11,15 +11,14 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  static final routes = {
+    JournalEntriesListScreen.routeName: (context) =>
+        const JournalEntriesListScreen(),
+    NewEntryScreen.routeName: (context) => const NewEntryScreen(),
+  };
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Journal',
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const JournalEntriesListScreen(),
-        '/welcome': (context) => const WelcomeScreen(),
-      },
-    );
+    return MaterialApp(title: 'App', routes: routes);
   }
 }
