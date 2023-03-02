@@ -19,7 +19,7 @@ class JournalEntriesListScreen extends StatefulWidget {
 
 class _JournalEntriesListScreenState extends State<JournalEntriesListScreen> {
   Journal journal = Journal(entries: []);
-
+  static const padding = EdgeInsets.all(8.0);
   @override
   void initState() {
     super.initState();
@@ -53,41 +53,48 @@ class _JournalEntriesListScreenState extends State<JournalEntriesListScreen> {
   }
 
   Widget journalEntryList(BuildContext context) {
-    return ListView.builder(
-      itemCount: journal.numberOfEntries,
-      itemBuilder: (context, index) {
-        const snippetLength = 60;
-        final entry = journal.entries[index];
-        final lineBreakIndex = entry.body.indexOf('\n');
-        String snippet;
-        if (lineBreakIndex > 0) {
-          snippet = '${entry.body.substring(0, lineBreakIndex)}...';
-        } else if (entry.body.length > snippetLength) {
-          snippet = '${entry.body.substring(0, snippetLength)}...';
-        } else {
-          snippet = entry.body;
-        }
-        final subtitle = entry.rating > 1
-            ? '$snippet \n${entry.rating} stars'
-            : '$snippet \n${entry.rating} star';
-        return ListTile(
-          title: Text(entry.title),
-          subtitle: Text(subtitle),
-        );
-      },
-    );
+    return Padding(
+        padding: padding,
+        child: ListView.builder(
+          itemCount: journal.numberOfEntries,
+          itemBuilder: (context, index) {
+            const snippetLength = 60;
+            final entry = journal.entries[index];
+            final lineBreakIndex = entry.body.indexOf('\n');
+            String snippet;
+            if (lineBreakIndex > 0) {
+              snippet = '${entry.body.substring(0, lineBreakIndex)}...';
+            } else if (entry.body.length > snippetLength) {
+              snippet = '${entry.body.substring(0, snippetLength)}...';
+            } else {
+              snippet = entry.body;
+            }
+            final subtitle = entry.rating > 1
+                ? '$snippet \n${entry.rating} stars'
+                : '$snippet \n${entry.rating} star';
+            return Padding(
+                padding: padding,
+                child: ListTile(
+                  title: Text(entry.title),
+                  subtitle: Text(subtitle),
+                  onTap: () {
+                    displayNewEntryScreen(context);
+                  },
+                ));
+          },
+        ));
   }
 
   FloatingActionButton addJournalEntryFab(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        displayJournalEntryScreen(context);
+        displayNewEntryScreen(context);
       },
       child: const Icon(Icons.add),
     );
   }
 
-  void displayJournalEntryScreen(BuildContext context) async {
+  void displayNewEntryScreen(BuildContext context) async {
     await Navigator.pushNamed(context, NewEntryScreen.routeName);
     _loadJournal();
   }
