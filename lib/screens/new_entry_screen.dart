@@ -6,7 +6,7 @@ import 'package:journal/widgets/journal_scaffold.dart';
 class NewEntryScreen extends StatelessWidget {
   const NewEntryScreen({Key? key}) : super(key: key);
 
-  static const routeName = '/new_entry_screen';
+  static const routeName = '/new_entry';
 
   @override
   Widget build(BuildContext context) {
