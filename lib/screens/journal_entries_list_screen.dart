@@ -67,9 +67,12 @@ class _JournalEntriesListScreenState extends State<JournalEntriesListScreen> {
         } else {
           snippet = entry.body;
         }
+        final subtitle = entry.rating > 1
+            ? '$snippet \n${entry.rating} stars'
+            : '$snippet \n${entry.rating} star';
         return ListTile(
           title: Text(entry.title),
-          subtitle: Text(snippet),
+          subtitle: Text(subtitle),
         );
       },
     );
