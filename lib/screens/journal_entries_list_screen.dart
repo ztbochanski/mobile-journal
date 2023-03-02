@@ -4,6 +4,7 @@ import 'package:journal/db/database_manager.dart';
 import 'package:journal/models/journal_entry.dart';
 import 'package:journal/models/journal.dart';
 import 'package:journal/screens/new_entry_screen.dart';
+import 'package:journal/screens/journal_entry_screen.dart';
 import 'package:journal/widgets/journal_scaffold.dart';
 import 'package:journal/widgets/welcome.dart';
 
@@ -78,7 +79,7 @@ class _JournalEntriesListScreenState extends State<JournalEntriesListScreen> {
                   title: Text(entry.title),
                   subtitle: Text(subtitle),
                   onTap: () {
-                    displayNewEntryScreen(context);
+                    displayJournalEntryScreen(context, entry);
                   },
                 ));
           },
@@ -97,5 +98,10 @@ class _JournalEntriesListScreenState extends State<JournalEntriesListScreen> {
   void displayNewEntryScreen(BuildContext context) async {
     await Navigator.pushNamed(context, NewEntryScreen.routeName);
     _loadJournal();
+  }
+
+  void displayJournalEntryScreen(BuildContext context, entry) async {
+    await Navigator.pushNamed(context, JournalEntryScreen.routeName,
+        arguments: entry);
   }
 }
