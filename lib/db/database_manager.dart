@@ -1,4 +1,5 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:flutter/services.dart';
 
 import 'package:journal/models/journal_entry.dart';
 import 'package:journal/models/journal_entry_dto.dart';
@@ -9,18 +10,13 @@ class DatabaseManager {
 
   static const table = 'journal_entries';
 
-  static const id = '_id';
+  static const id = 'id';
   static const title = 'title';
   static const body = 'body';
   static const rating = 'rating';
   static const date = 'date';
 
-  static const entrySchema = 'CREATE TABLE IF NOT EXISTS $table('
-      '$id INTEGER PRIMARY KEY AUTOINCREMENT,'
-      '$title TEXT,'
-      '$body TEXT,'
-      '$rating INTEGER,'
-      '$date DATETIME)';
+  static const schemaFilePath = 'assets/database_schema.txt';
 
   static const entryInsert =
       'INSERT INTO $table($title, $body, $rating, $date) '
@@ -51,19 +47,9 @@ class DatabaseManager {
   }
 
   static Future<void> onCreateDatabase(Database db, int version) async {
-    await db.execute(entrySchema);
+    String schema = await loadAsset(schemaFilePath);
+    await db.execute(schema);
   }
-
-  // Future<void> insertJournalEntry(JournalEntryDTO entry) async {
-  //   _database.transaction((txn) async {
-  //     await txn.rawInsert(entryInsert, [
-  //       entry.rating,
-  //       entry.title,
-  //       entry.body,
-  //       entry.date.toString(),
-  //     ]);
-  //   });
-  // }
 
   Future<void> insertJournalEntry(JournalEntryDTO entry) async {
     final db = _database;
@@ -88,7 +74,7 @@ class DatabaseManager {
     final List<Map> journalRecords = await db.query('journal_entries');
     final journalEntries = journalRecords.map((record) {
       return JournalEntry(
-        id: record['_id'],
+        id: record['id'],
         rating: record['rating'],
         title: record['title'],
         body: record['body'],
@@ -97,5 +83,9 @@ class DatabaseManager {
     }).toList();
 
     return journalEntries;
+  }
+
+  static Future<String> loadAsset(String filePath) async {
+    return await rootBundle.loadString(filePath);
   }
 }
