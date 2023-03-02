@@ -58,7 +58,6 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
 
   Widget titleFormField() {
     return TextFormField(
-      controller: _titleController,
       decoration: const InputDecoration(
         labelText: 'Title',
         border: OutlineInputBorder(),
@@ -100,12 +99,6 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
   Widget ratingFormField() {
     return RatingFormField(
       initialValue: 0,
-      validator: (value) {
-        if (value == 0) {
-          return 'Please select a rating.';
-        }
-        return null;
-      },
       onSaved: (value) {
         journalEntryDTO.rating = value!;
       },
