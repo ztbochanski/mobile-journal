@@ -2,26 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:journal/app.dart';
+import 'package:journal/db/database_manager.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // initializeDatabase();
-
-  setOrientations();
-
-  runApp(const App());
-}
-
-// void initializeDatabase() async {
-//   await DatabaseManager.initialize();
-// }
-
-void setOrientations() {
-  SystemChrome.setPreferredOrientations([
+  await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
+
+  await DatabaseManager.initialize();
+  runApp(const App());
 }
