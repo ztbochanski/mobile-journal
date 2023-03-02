@@ -56,10 +56,20 @@ class _JournalEntriesListScreenState extends State<JournalEntriesListScreen> {
     return ListView.builder(
       itemCount: journal.numberOfEntries,
       itemBuilder: (context, index) {
+        const snippetLength = 60;
         final entry = journal.entries[index];
+        final lineBreakIndex = entry.body.indexOf('\n');
+        String snippet;
+        if (lineBreakIndex > 0) {
+          snippet = '${entry.body.substring(0, lineBreakIndex)}...';
+        } else if (entry.body.length > snippetLength) {
+          snippet = '${entry.body.substring(0, snippetLength)}...';
+        } else {
+          snippet = entry.body;
+        }
         return ListTile(
           title: Text(entry.title),
-          subtitle: Text(entry.body),
+          subtitle: Text(snippet),
         );
       },
     );
