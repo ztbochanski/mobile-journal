@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:intl/intl.dart';
+
 import 'package:journal/db/database_manager.dart';
 import 'package:journal/models/journal_entry.dart';
 import 'package:journal/models/journal.dart';
@@ -59,20 +61,11 @@ class _JournalEntriesListScreenState extends State<JournalEntriesListScreen> {
         child: ListView.builder(
           itemCount: journal.numberOfEntries,
           itemBuilder: (context, index) {
-            const snippetLength = 60;
             final entry = journal.entries[index];
-            final lineBreakIndex = entry.body.indexOf('\n');
-            String snippet;
-            if (lineBreakIndex > 0) {
-              snippet = '${entry.body.substring(0, lineBreakIndex)}...';
-            } else if (entry.body.length > snippetLength) {
-              snippet = '${entry.body.substring(0, snippetLength)}...';
-            } else {
-              snippet = entry.body;
-            }
-            final subtitle = entry.rating > 1
-                ? '$snippet \n${entry.rating} stars'
-                : '$snippet \n${entry.rating} star';
+
+            DateFormat dateFormat = DateFormat('EEEE, MMMM d, yyyy');
+            String subtitle = dateFormat.format(entry.date);
+
             return Padding(
                 padding: padding,
                 child: ListTile(
