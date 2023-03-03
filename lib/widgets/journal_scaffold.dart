@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
 class JournalScaffold extends StatelessWidget {
+  final bool isDarkMode;
+  final VoidCallback onToggleTheme;
+
   const JournalScaffold({
     Key? key,
+    required this.isDarkMode,
+    required this.onToggleTheme,
     required this.title,
     this.floatingActionButton,
     this.child,
@@ -18,7 +23,10 @@ class JournalScaffold extends StatelessWidget {
         appBar: AppBar(title: Text(title), actions: const [
           SettingsIcon(),
         ]),
-        endDrawer: const RightDrawer(),
+        endDrawer: RightDrawer(
+          isDarkMode: isDarkMode,
+          onToggleTheme: onToggleTheme,
+        ),
         floatingActionButton: floatingActionButton,
         body: child);
   }
@@ -39,9 +47,12 @@ class SettingsIcon extends StatelessWidget {
 }
 
 class RightDrawer extends StatelessWidget {
-  const RightDrawer({
-    Key? key,
-  }) : super(key: key);
+  final bool isDarkMode;
+  final VoidCallback onToggleTheme;
+
+  const RightDrawer(
+      {Key? key, required this.isDarkMode, required this.onToggleTheme})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,15 +66,52 @@ class RightDrawer extends StatelessWidget {
             ),
             child: const Text('Settings'),
           ),
-          ListTile(
+          SwitchListTile(
             title: const Text('Dark Mode'),
-            trailing: Switch(
-              value: false,
-              onChanged: (value) {},
-            ),
+            value: isDarkMode,
+            onChanged: (value) {
+              onToggleTheme();
+            },
           ),
         ],
       ),
     );
   }
 }
+
+// class RightDrawer extends StatefulWidget {
+
+//   const RightDrawer({
+//     Key? key,
+//   }) : super(key: key);
+
+//   @override
+//   State<RightDrawer> createState() => _RightDrawerState();
+// }
+
+// class _RightDrawerState extends State<RightDrawer> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Drawer(
+//       child: ListView(
+//         padding: EdgeInsets.zero,
+//         children: [
+//           DrawerHeader(
+//             decoration: BoxDecoration(
+//               color: Theme.of(context).primaryColor,
+//             ),
+//             child: const Text('Settings'),
+//           ),
+//           const Text('Dark Mode'),
+//           Switch(
+//             value: widget.isDarkMode,
+//             onChanged: (value) {
+//               // Calling parent Widget's method from child
+//               widget.onToggleTheme;
+//             },
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

@@ -4,7 +4,12 @@ import 'package:journal/widgets/journal_scaffold.dart';
 import 'package:journal/models/journal_entry.dart';
 
 class JournalEntryScreen extends StatelessWidget {
-  const JournalEntryScreen({Key? key}) : super(key: key);
+  final bool isDarkMode;
+  final VoidCallback onToggleTheme;
+
+  const JournalEntryScreen(
+      {Key? key, required this.isDarkMode, required this.onToggleTheme})
+      : super(key: key);
 
   static const routeName = '/journal_entry';
 
@@ -15,6 +20,8 @@ class JournalEntryScreen extends StatelessWidget {
 
     return JournalScaffold(
         title: arguments.title,
+        isDarkMode: isDarkMode,
+        onToggleTheme: onToggleTheme,
         child: Container(
           margin: const EdgeInsets.all(20),
           child: SingleChildScrollView(

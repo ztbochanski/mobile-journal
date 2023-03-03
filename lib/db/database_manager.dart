@@ -35,7 +35,6 @@ class DatabaseManager {
   }
 
   static Future initialize() async {
-    await deleteDatabase('journal.sqlite3.db');
     final databasePath = await getDatabasesPath();
     final path = '$databasePath/$_databaseName';
     final db = await openDatabase(

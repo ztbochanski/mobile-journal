@@ -11,7 +11,14 @@ import 'package:journal/widgets/journal_scaffold.dart';
 import 'package:journal/widgets/welcome.dart';
 
 class JournalEntriesListScreen extends StatefulWidget {
-  const JournalEntriesListScreen({Key? key}) : super(key: key);
+  final bool isDarkMode;
+  final VoidCallback onToggleTheme;
+
+  const JournalEntriesListScreen({
+    Key? key,
+    required this.isDarkMode,
+    required this.onToggleTheme,
+  }) : super(key: key);
 
   static const routeName = '/';
 
@@ -43,12 +50,16 @@ class _JournalEntriesListScreenState extends State<JournalEntriesListScreen> {
     if (journal == null) {
       return JournalScaffold(
         title: 'Loading...',
+        isDarkMode: widget.isDarkMode,
+        onToggleTheme: widget.onToggleTheme,
         floatingActionButton: addJournalEntryFab(context),
         child: const Center(child: CircularProgressIndicator()),
       );
     } else {
       return JournalScaffold(
         title: journal.isEmpty ? 'Welcome!' : 'Journal Entries',
+        isDarkMode: widget.isDarkMode,
+        onToggleTheme: widget.onToggleTheme,
         floatingActionButton: addJournalEntryFab(context),
         child: journal.isEmpty ? const Welcome() : journalEntryList(context),
       );
